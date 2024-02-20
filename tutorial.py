@@ -129,7 +129,7 @@ def message(payload):
         client.chat_postMessage(channel=channel_id, text=reply)
 
 def send_message_to_slack(message):
-    webhook_url = 'https://hooks.slack.com/services/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'  # Replace with your actual webhook URL
+    webhook_url = 'https://hooks.slack.com/services/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'
     data = {'text': message}
     headers = {'Content-Type': 'application/json'}
     response = requests.post(webhook_url, json=data, headers=headers)
