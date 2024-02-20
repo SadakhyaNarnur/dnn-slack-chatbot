@@ -1,7 +1,7 @@
 from slack import WebClient
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from flask import Flask, request, Response
 from slackeventsapi import SlackEventAdapter
 import string
@@ -18,7 +18,7 @@ import json
 import pickle
 import nltk
 nltk.download('punkt')
-load_dotenv()
+# load_dotenv()
 app = Flask(__name__)
 
 slack_event_adapter = SlackEventAdapter(
@@ -129,7 +129,7 @@ def message(payload):
         client.chat_postMessage(channel=channel_id, text=reply)
 
 def send_message_to_slack(message):
-    webhook_url = 'https://hooks.slack.com/services/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'
+    webhook_url = os.environ['HOOKUP_URL']
     data = {'text': message}
     headers = {'Content-Type': 'application/json'}
     response = requests.post(webhook_url, json=data, headers=headers)
