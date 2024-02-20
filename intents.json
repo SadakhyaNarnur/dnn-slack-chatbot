@@ -1,0 +1,53 @@
+{
+"intents": [
+        {
+        "tag": "greeting",
+        "patterns": ["Hi", "Hello", "Hey", "Good morning", "Good afternoon"],
+        "responses": ["Hello! How can I assist you today?", "Hi there! How can I help you with scheduling?", "Hey! Need any help with meetings?"],
+        "context_set": ""
+        },
+        {
+        "tag": "farewell",
+        "patterns": ["Goodbye", "Bye", "See you later", "Take care"],
+        "responses": ["Goodbye! Have a great day!", "Bye! Let me know if you need anything else.", "See you later!"],
+        "context_set": ""
+        },
+        {
+        "tag": "schedule_request",
+        "patterns": ["Schedule a meeting", "Can you set up a meeting?", "I need to schedule an appointment"],
+        "responses": ["Sure! I can help with that. Please provide details like date, time, and participants."],
+        "context_set": "schedule"
+        },
+        {
+        "tag": "ask_calendar",
+        "patterns": ["Can you check my calendar?", "What's on my schedule?", "Do I have any meetings?"],
+        "responses": ["Sure, let me check your calendar."],
+        "context_set": ""
+        },
+        {
+        "tag": "thank_you",
+        "patterns": ["Thank you", "Thanks a lot", "Appreciate your help"],
+        "responses": ["You're welcome! If you need any further assistance, feel free to ask."],
+        "context_set": ""
+        },
+        {
+        "tag": "provide_availability",
+        "patterns": ["I'm available on Monday morning.", "Wednesday afternoon works for me.", "I have time on Friday at 3 PM.", "What about next week?"],
+        "responses": ["Great! I'll note that down.", "Thank you for letting me know. I'll mark it down."],
+        "context_set": "confirm_availability"
+        },
+        {
+        "tag": "confirm",
+        "patterns": ["Confirm appointment", "Is my meeting confirmed?", "Did you book the appointment?"],
+        "responses": ["Yes, your meeting is confirmed.", "Your appointment has been successfully scheduled."],
+        "context_set": "confirmation"
+        },
+        {
+        "tag": "cancel",
+        "patterns": ["Cancel meeting", "I need to cancel my appointment", "Can you cancel my meeting?"],
+        "responses": ["Sure, let me handle that for you. Please provide the meeting ID or date."],
+        "context_set": "cancellation"
+        }
+]
+}
+      
