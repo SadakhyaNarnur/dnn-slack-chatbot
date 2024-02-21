@@ -2,10 +2,14 @@ version: 1.0
 runtime: python311
 build:
   commands:
+    pre_build:
+      - python3 -m venv venv
     build:
+      - source venv/bin/activate
       - pip3 install -r requirements.txt
-run: 
+run:
   runtime-version: 3.11.7
-  command: python3 bot.py
+  command: venv/bin/python3 bot.py
   network:
     port: 5000
+
