@@ -6,7 +6,7 @@ build:
       - pip3 install -r requirements.txt 
       - pip3 uninstall slack
 run: 
-  runtime-version: 3.11
+  runtime-version: 3.11.7
   command: python3 bot.py
   network:
     port: 3000
