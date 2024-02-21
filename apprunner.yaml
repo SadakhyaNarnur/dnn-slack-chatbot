@@ -3,12 +3,12 @@ runtime: python311
 build:
   commands:
     build:
-      - python3 -m venv venv
+      - python -m venv venv
       - source venv/bin/activate
-      - pip3 install -r requirements.txt
-      - pip3 install slack_sdk
+      - pip install -r requirements.txt
+      - pip install slack_sdk
 run: 
   runtime-version: 3.11.7
-  command: python3 bot.py
+  command: python bot.py
   network:
     port: 8080
