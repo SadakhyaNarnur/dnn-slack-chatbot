@@ -1,4 +1,4 @@
-from slack_sdk import WebClient
+from slack import WebClient
 import os
 from pathlib import Path
 # from dotenv import load_dotenv
