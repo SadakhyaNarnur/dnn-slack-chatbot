@@ -1,4 +1,4 @@
-from slack_sdk import WebClient
+import slack_sdk
 import os
 from pathlib import Path
 # from dotenv import load_dotenv
@@ -24,7 +24,7 @@ app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(
     os.environ['SIGNING_SECRET_'], '/slack/events', app)
 
-client = WebClient(token=os.environ['SLACK_TOKEN_'])
+client = slack_sdk.WebClient(token=os.environ['SLACK_TOKEN_'])
 BOT_ID = client.api_call("auth.test")['user_id']
 
 with open("intents.json") as file:
