@@ -46,7 +46,6 @@ rsa==4.9
 scipy==1.12.0
 six==1.16.0
 slack_sdk==3.27.0
-slackclient==2.9.4
 slackeventsapi==3.0.1
 tensorboard==2.12.3
 tensorboard-data-server==0.7.2
