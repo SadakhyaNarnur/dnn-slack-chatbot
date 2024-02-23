@@ -29,9 +29,9 @@ def index():
   return render_template('index.html')
 
 slack_event_adapter = SlackEventAdapter(
-    os.environ['SIGNING_SECRET_'], '/slack/events', app)
+    "c89e2cb12be8c6b870e1d8a170bafa81", '/slack/events', app)
 
-client = WebClient(token=os.environ['SLACK_TOKEN_'])
+client = WebClient(token="xoxb-6659138368100-6672589994658-T2NDBoLQ0pWYbhXAihhXauQf")
 BOT_ID = client.api_call("auth.test")['user_id']
 print(BOT_ID)
 
