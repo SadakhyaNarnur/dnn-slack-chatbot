@@ -1,8 +1,8 @@
-import slack_sdk
+from slack_sdk import WebClient
 import os
 from pathlib import Path
-# from dotenv import load_dotenv
-from flask import Flask, request, Response
+from dotenv import load_dotenv
+from flask import Flask, render_template
 from slackeventsapi import SlackEventAdapter
 import string
 from datetime import datetime, timedelta
@@ -17,15 +17,23 @@ import random
 import json
 import pickle
 import nltk
+import tensorflow as tf
+import re
+
 nltk.download('punkt')
 # load_dotenv()
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+  return render_template('index.html')
+
 slack_event_adapter = SlackEventAdapter(
     os.environ['SIGNING_SECRET_'], '/slack/events', app)
 
-client = slack_sdk.WebClient(token=os.environ['SLACK_TOKEN_'])
+client = WebClient(token=os.environ['SLACK_TOKEN_'])
 BOT_ID = client.api_call("auth.test")['user_id']
+print(BOT_ID)
 
 with open("intents.json") as file:
     data = json.load(file)
@@ -117,6 +125,48 @@ def message(payload):
     user_id = event.get('user')
     text = event.get('text')
 
+    # Define regular expressions to match patterns for name, day, and time
+    name_pattern = r"with ([\w\s]+)"
+    day_pattern = r"on (\w+)"
+    date_pattern = r"on (\d{1,2}/\d{1,2}/\d{4})"
+    time_pattern = r"at (\d{1,2}(?::\d{2})?\s?[ap]m)"
+
+    # Match patterns in the message text
+    name_match = re.search(name_pattern, text, re.IGNORECASE)
+    day_match = re.search(day_pattern, text, re.IGNORECASE)
+    time_match = re.search(time_pattern, text, re.IGNORECASE)
+    date_match = re.search(date_pattern, text, re.IGNORECASE)
+
+    # Initialize variables to store extracted information
+    name = None
+    day = None
+    time = None
+    date = None
+
+    # Extract information if patterns are found
+    if name_match:
+        name = name_match.group(1)
+        if user_id != None and BOT_ID != user_id:
+            client.chat_postMessage(channel=channel_id, text="Did you say name is "+name)
+    if day_match:
+        day = day_match.group(1)
+        if user_id != None and BOT_ID != user_id:    
+            client.chat_postMessage(channel=channel_id, text="You want the meeting on "+day)
+    if time_match:
+        time = time_match.group(1)
+        if user_id != None and BOT_ID != user_id:
+            client.chat_postMessage(channel=channel_id, text="Do you confirm this time "+time)
+    if date_match:
+        date_str = date_match.group(1)
+        date = datetime.datetime.strptime(date_str, '%m/%d/%Y').date() 
+        if user_id != None and BOT_ID != user_id:
+            client.chat_postMessage(channel=channel_id, text="Do you confirm this date "+date)
+
+    name = None
+    day = None
+    time = None
+    date = None
+
     results = model.predict([bag_of_words(text, words)])
     results_index = numpy.argmax(results)
     tag = labels[results_index]
@@ -129,7 +179,7 @@ def message(payload):
         client.chat_postMessage(channel=channel_id, text=reply)
 
 def send_message_to_slack(message):
-    webhook_url = os.environ['HOOKUP_URL']
+    webhook_url = 'https://hooks.slack.com/services/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'
     data = {'text': message}
     headers = {'Content-Type': 'application/json'}
     response = requests.post(webhook_url, json=data, headers=headers)
@@ -138,4 +188,4 @@ def send_message_to_slack(message):
 if __name__ == '__main__':
     # Run the Flask application
     send_message_to_slack("Hello, I am your assistant!")
-    app.run()
+    app.run(host='0.0.0.0',port=5000)
