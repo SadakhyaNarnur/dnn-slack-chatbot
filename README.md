@@ -1,6 +1,6 @@
 # dnn-slack-chatbot
 
-##What are we building?
+## What are we building?
 ### An NLP based bot that helps with scheduling meetings based on its conversation with a user. The bot is essentially a Flask app that is hosted with Ngrok.
 An App named ‘Meetbot’ communicates with our Flask app and responds based on the inference of our model.
 
